@@ -1,6 +1,6 @@
 import os
 import logging
-from langchain_google_genai import ChatGoogleGenerativeAI
+from app.utils.retry import RetryingChatGoogleGenerativeAI
 from app.agents.state import AgentState
 from app.models.schemas import ResumeData
 
@@ -12,7 +12,7 @@ def get_llm():
     if not api_key:
         raise ValueError("GOOGLE_API_KEY environment variable is not set. Please set it in your .env file.")
     model_name = os.getenv("GEMINI_MODEL", "gemini-3.5-flash")
-    return ChatGoogleGenerativeAI(
+    return RetryingChatGoogleGenerativeAI(
         model=model_name,
         google_api_key=api_key,
         temperature=0.0

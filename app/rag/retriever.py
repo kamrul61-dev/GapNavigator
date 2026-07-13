@@ -3,7 +3,7 @@ import logging
 from typing import List
 from dotenv import load_dotenv
 from langchain_community.vectorstores import FAISS
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from app.utils.retry import RetryingGoogleGenerativeAIEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 # Load environment variables
@@ -16,13 +16,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 KB_DIR = os.path.join(BASE_DIR, "rag", "knowledge_base")
 INDEX_PATH = os.path.join(os.path.dirname(BASE_DIR), "vectorstore", "faiss_index")
 
-def get_embeddings_model() -> GoogleGenerativeAIEmbeddings:
+def get_embeddings_model() -> RetryingGoogleGenerativeAIEmbeddings:
     """Returns the Google Generative AI Embeddings model wrapper."""
     api_key = os.getenv("GOOGLE_API_KEY")
     if not api_key:
         raise ValueError("GOOGLE_API_KEY environment variable is not set. Please set it in your .env file.")
     embedding_model = os.getenv("GEMINI_EMBEDDING_MODEL", "models/gemini-embedding-2")
-    return GoogleGenerativeAIEmbeddings(
+    return RetryingGoogleGenerativeAIEmbeddings(
         model=embedding_model,
         google_api_key=api_key
     )
