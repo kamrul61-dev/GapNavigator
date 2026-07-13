@@ -94,7 +94,7 @@ GEMINI_MODEL=gemini-3.5-flash
 # Google Gemini Embedding Model Name (Optional, defaults to models/gemini-embedding-2)
 GEMINI_EMBEDDING_MODEL=models/gemini-embedding-2
 
-# LangSmith Tracing (Optional - set to true to monitor logs in LangSmith)
+# LangSmith Tracing (set to true to monitor logs in LangSmith)
 LANGCHAIN_TRACING_V2=true
 LANGCHAIN_API_KEY=your-langsmith-api-key-here
 LANGCHAIN_PROJECT="gapnavigator-lite"
